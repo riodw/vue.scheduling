@@ -3,18 +3,14 @@
     <b-navbar toggleable="sm" type="light" variant="white">
       <b-navbar-toggle target="nav-text-collapse"></b-navbar-toggle>
 
-      <b-navbar-brand class="shadow rounded-lg p-2">
-        <router-link to="/">RW</router-link>
-      </b-navbar-brand>
+      <b-navbar-brand to="/" class="shadow rounded-lg p-2">RW</b-navbar-brand>
 
       <b-collapse id="nav-text-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item>
-            <router-link to="/">Home</router-link>
-          </b-nav-item>
-          <b-nav-item>
-            <router-link to="/h">Home</router-link>
-          </b-nav-item>
+          <b-nav-item to="/">Home</b-nav-item>
+          <b-nav-item to="/schedule">Schedule</b-nav-item>
+          <b-nav-item to="/calendar">Calendar</b-nav-item>
+          <b-nav-item to="/swap">Swap</b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
           <b-nav-item-dropdown right no-caret>
