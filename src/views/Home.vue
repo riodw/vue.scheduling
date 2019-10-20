@@ -1,5 +1,5 @@
 <template>
-  <div id="home" class="d-flex flex-column flex-fill">
+  <div id="home">
     <div>
       <h2>Home</h2>
       <div class="row">
@@ -16,16 +16,16 @@
         </div>
       </div>
     </div>
-    <div class="d-flex flex-fill flex-column position-relative mt-3">
-      <div id="asdf" class="d-flex flex-fill">
-        <div class="d-flex flex-fill" style="overflow-x: auto; overflow-y: hidden;">
+    <div class="mt-3">
+      <div class="d-flex flex-fill">
+        <div class="d-flex overflow-auto">
           <div v-for="c in cards" :key="c" class="card mr-3" style="min-width: 21rem;">
-            <div class="card-body d-flex flex-column overflow-hidden">
-              <div class="mb-3">
+            <div class="card-body">
+              <div class="mb-4">
                 <h4>Monday, June 6th</h4>
                 <b-progress :value="60" :max="100" height=".5rem"></b-progress>
               </div>
-              <div class="d-flex flex-column flex-fill overflow-auto">
+              <div>
                 <div class="card mt-3">
                   <div class="card-body">
                     <small class="text-muted">9:00 AM - 11:30 AM</small>
@@ -77,14 +77,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-#asdf {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  z-index: 3000;
-}
 .navbar-brand {
   font-size: 1rem;
 }
