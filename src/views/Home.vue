@@ -1,19 +1,17 @@
 <template>
   <div id="home">
-    <div>
-      <h2>Home</h2>
-      <div class="row">
-        <div class="col-sm-12 col-md-auto mb-1">
-          <b-form-input
-            required
-            placeholder="riodweber@gmail.com"
-            type="email"
-            style="min-width: 21rem;"
-          ></b-form-input>
-        </div>
-        <div class="col-sm-12 col-md-auto ml-auto mb-1">
-          <VueCtkDateTimePicker only-date right style="min-width: 21rem;" />
-        </div>
+    <h2>Home</h2>
+    <div class="row">
+      <div class="col-sm-12 col-md-auto mb-1">
+        <b-form-input
+          required
+          placeholder="riodweber@gmail.com"
+          type="email"
+          style="min-width: 21rem;"
+        ></b-form-input>
+      </div>
+      <div class="col-sm-12 col-md-auto ml-auto mb-1">
+        <VueCtkDateTimePicker only-date right style="min-width: 21rem;" />
       </div>
     </div>
     <div class="mt-3">
@@ -22,7 +20,7 @@
           <div v-for="c in cards" :key="c" class="card mr-3" style="min-width: 21rem;">
             <div class="card-body">
               <div class="mb-4">
-                <h4>Monday, June 6th</h4>
+                <h4>Sunday, June 6th</h4>
                 <b-progress :value="60" :max="100" height=".5rem"></b-progress>
               </div>
               <div>
@@ -77,7 +75,4 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.navbar-brand {
-  font-size: 1rem;
-}
 </style>

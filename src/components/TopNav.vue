@@ -46,6 +46,7 @@ export default {
 <style scoped lang="scss">
 .navbar-brand {
   font-size: 1rem;
+  font-weight: 200 !important;
 }
 a.router-link-exact-active {
   font-weight: 600;
