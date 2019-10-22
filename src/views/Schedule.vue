@@ -3,13 +3,16 @@
     <div>
       <h2>Schedule</h2>
       <div class="row">
-        <div class="col-sm-12 col-md-4 col-lg-3 mb-1">
+        <div class="col-sm-12 col-md-6 col-lg-4 mb-1">
           <div class="row">
             <div class="col-sm-12 col-md mb-1">
               <b-button variant="secondary" class="w-100">Options</b-button>
             </div>
             <div class="col">
               <b-button variant="secondary" class="w-100">Filters</b-button>
+            </div>
+            <div class="col d-none d-md-block">
+              <b-button variant="warning" class="w-100">Edit</b-button>
             </div>
           </div>
         </div>
@@ -20,7 +23,7 @@
     </div>
     <div class="mt-3">
       <div class="row">
-        <div class="col-md-12 col-lg-auto">
+        <div class="col-md-12 col-lg-auto pr-0">
           <div class="card mb-4">
             <div class="card-header">
               <h5 class="m-0">Options</h5>
@@ -29,45 +32,91 @@
           </div>
         </div>
         <div class="col-md-12 col-lg">
-          <div class="card mb-4">
+          <div class="card mb-3">
             <div class="card-header">
               <h5 class="m-0">Filters</h5>
             </div>
-            <div class="card-body">asdf</div>
+            <div class="card-body">
+              <div class="form-inline">
+                <b-dropdown text="Event" variant="primary" class="mr-1 mb-1">
+                  <b-dropdown-item>First Action</b-dropdown-item>
+                  <b-dropdown-item>Second Action</b-dropdown-item>
+                  <b-dropdown-item>Third Action</b-dropdown-item>
+                  <b-dropdown-item active>Active action</b-dropdown-item>
+                </b-dropdown>
+                <b-dropdown text="Name" variant="primary" class="mr-1 mb-1">
+                  <b-dropdown-item>First Action</b-dropdown-item>
+                  <b-dropdown-item>Second Action</b-dropdown-item>
+                  <b-dropdown-item>Third Action</b-dropdown-item>
+                  <b-dropdown-item active>Active action</b-dropdown-item>
+                </b-dropdown>
+                <b-input-group append="or" class="mr-1 mb-1">
+                  <template v-slot:prepend>
+                    <b-dropdown text="is">
+                      <b-dropdown-item>Action A</b-dropdown-item>
+                      <b-dropdown-item>Action B</b-dropdown-item>
+                    </b-dropdown>
+                  </template>
+                  <b-form-input></b-form-input>
+                </b-input-group>
+                <b-button variant="danger" class="mb-1">
+                  <font-awesome-icon :icon="['far', 'trash-alt']" />
+                </b-button>
+              </div>
+            </div>
           </div>
-          <div class>
-            <div class="card-header">asdf</div>
-            <div class="table-responsive">
-              <table class="table table-bordered table-sm bg-white">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td scope="row">1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <td scope="row">2</td>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                  </tr>
-                  <tr>
-                    <td scope="row">3</td>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
-                </tbody>
-              </table>
+          <div>
+            <div class="card mb-3">
+              <div class="card-body">
+                Cassian's Schedule
+              </div>
+            </div>
+            <div>
+              <!-- <div class="card-header">asdf</div> -->
+              <div class="table-responsive">
+                <table class="table table-bordered table-sm bg-white">
+                  <thead>
+                    <tr>
+                      <th scope="col">Sunday</th>
+                      <th scope="col">Monday</th>
+                      <th scope="col">Tuesday</th>
+                      <th scope="col">Wednesday</th>
+                      <th scope="col">Thursday</th>
+                      <th scope="col">Friday</th>
+                      <th scope="col">Saturday</th>
+                    </tr>
+                    <tr>
+                      <th scope="col">6/30/2019</th>
+                      <th scope="col">7/1/2019</th>
+                      <th scope="col">7/2/2019</th>
+                      <th scope="col">7/3/2019</th>
+                      <th scope="col">Thursday</th>
+                      <th scope="col">Friday</th>
+                      <th scope="col">Saturday</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td scope="row">1</td>
+                      <td>Mark</td>
+                      <td>Otto</td>
+                      <td>@mdo</td>
+                    </tr>
+                    <tr>
+                      <td scope="row">2</td>
+                      <td>Jacob</td>
+                      <td>Thornton</td>
+                      <td>@fat</td>
+                    </tr>
+                    <tr>
+                      <td scope="row">3</td>
+                      <td>Larry</td>
+                      <td>the Bird</td>
+                      <td>@twitter</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
@@ -77,7 +126,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
 import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
 
