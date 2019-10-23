@@ -77,42 +77,36 @@
                 <table class="table table-bordered table-sm bg-white">
                   <thead>
                     <tr>
-                      <th scope="col">Sunday</th>
-                      <th scope="col">Monday</th>
-                      <th scope="col">Tuesday</th>
-                      <th scope="col">Wednesday</th>
-                      <th scope="col">Thursday</th>
-                      <th scope="col">Friday</th>
-                      <th scope="col">Saturday</th>
+                      <th></th>
+                      <th>Sunday</th>
+                      <th>Monday</th>
+                      <th>Tuesday</th>
+                      <th>Wednesday</th>
+                      <th>Thursday</th>
+                      <th>Friday</th>
+                      <th>Saturday</th>
                     </tr>
                     <tr>
-                      <th scope="col">6/30/2019</th>
-                      <th scope="col">7/1/2019</th>
-                      <th scope="col">7/2/2019</th>
-                      <th scope="col">7/3/2019</th>
-                      <th scope="col">Thursday</th>
-                      <th scope="col">Friday</th>
-                      <th scope="col">Saturday</th>
+                      <th></th>
+                      <th>Jun, 9</th>
+                      <th>Jun, 10</th>
+                      <th>Jun, 11</th>
+                      <th>Jun, 12</th>
+                      <th>Jun, 13</th>
+                      <th>Jun, 14</th>
+                      <th>Jun, 15</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td scope="row">1</td>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                    </tr>
-                    <tr>
-                      <td scope="row">2</td>
-                      <td>Jacob</td>
-                      <td>Thornton</td>
-                      <td>@fat</td>
-                    </tr>
-                    <tr>
-                      <td scope="row">3</td>
-                      <td>Larry</td>
-                      <td>the Bird</td>
-                      <td>@twitter</td>
+                      <th>Shift 1</th>
+                      <td>Rio</td>
+                      <td>Rio</td>
+                      <td>Rio</td>
+                      <td>Rio</td>
+                      <td>Rio</td>
+                      <td>Rio</td>
+                      <td>Rio</td>
                     </tr>
                   </tbody>
                 </table>
