@@ -63,53 +63,76 @@
                   <font-awesome-icon :icon="['far', 'trash-alt']" />
                 </b-button>
               </div>
-            </div>
-          </div>
-          <div>
-            <div class="card mb-3">
-              <div class="card-body">
-                Cassian's Schedule
+              <div>
+                <b-dropdown size="sm" variant="outline-primary" text="Add Another" class="mt-3" no-caret>
+                  <b-dropdown-item>Event</b-dropdown-item>
+                </b-dropdown>
               </div>
             </div>
-            <div>
-              <!-- <div class="card-header">asdf</div> -->
-              <div class="table-responsive">
-                <table class="table table-bordered table-sm bg-white">
-                  <thead>
-                    <tr>
-                      <th></th>
-                      <th>Sunday</th>
-                      <th>Monday</th>
-                      <th>Tuesday</th>
-                      <th>Wednesday</th>
-                      <th>Thursday</th>
-                      <th>Friday</th>
-                      <th>Saturday</th>
-                    </tr>
-                    <tr>
-                      <th></th>
-                      <th>Jun, 9</th>
-                      <th>Jun, 10</th>
-                      <th>Jun, 11</th>
-                      <th>Jun, 12</th>
-                      <th>Jun, 13</th>
-                      <th>Jun, 14</th>
-                      <th>Jun, 15</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th>Shift 1</th>
-                      <td>Rio</td>
-                      <td>Rio</td>
-                      <td>Rio</td>
-                      <td>Rio</td>
-                      <td>Rio</td>
-                      <td>Rio</td>
-                      <td>Rio</td>
-                    </tr>
-                  </tbody>
-                </table>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="card mb-3">
+                <div class="card-body">Cassiani's Schedule</div>
+              </div>
+              <div>
+                <!-- <div class="card-header">asdf</div> -->
+                <div class="table-responsive">
+                  <table class="table table-bordered table-sm bg-white">
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th>Sunday</th>
+                        <th>Monday</th>
+                        <th>Tuesday</th>
+                        <th>Wednesday</th>
+                        <th>Thursday</th>
+                        <th>Friday</th>
+                        <th>Saturday</th>
+                      </tr>
+                      <tr>
+                        <th></th>
+                        <th>Jun, 9</th>
+                        <th>Jun, 10</th>
+                        <th>Jun, 11</th>
+                        <th>Jun, 12</th>
+                        <th>Jun, 13</th>
+                        <th>Jun, 14</th>
+                        <th>Jun, 15</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th>Shift 1</th>
+                        <td>Rio</td>
+                        <td>Rio</td>
+                        <td>Rio</td>
+                        <td>Rio</td>
+                        <td>Rio</td>
+                        <td>Rio</td>
+                        <td>Rio</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="col-auto d-none d-xl-block">
+              <div class="card">
+                <div class="card-header">
+                  <input type="text" class="form-control" placeholder="Search" />
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">
+                    <div>Cassiani</div>
+                  </li>
+                  <li class="list-group-item">
+                    <div>Dapibus ac facilisis in</div>
+                  </li>
+                  <li class="list-group-item">
+                    <div>Vestibulum at eros</div>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
