@@ -64,7 +64,13 @@
                 </b-button>
               </div>
               <div>
-                <b-dropdown size="sm" variant="outline-primary" text="Add Another" class="mt-3" no-caret>
+                <b-dropdown
+                  size="sm"
+                  variant="outline-primary"
+                  text="Add Another"
+                  class="mt-3"
+                  no-caret
+                >
                   <b-dropdown-item>Event</b-dropdown-item>
                 </b-dropdown>
               </div>
@@ -118,6 +124,18 @@
               </div>
             </div>
             <div class="col-auto d-none d-xl-block">
+              <div class="card mb-3">
+                <h6 class="card-header">Save Box</h6>
+                <div class="card-body">
+                  <div class="simple-page">
+                    <Container @drop="onDrop">
+                      <Draggable v-for="item in items" :key="item.id">
+                        <div class="btn btn-primary">{{item.data}}</div>
+                      </Draggable>
+                    </Container>
+                  </div>
+                </div>
+              </div>
               <div class="card">
                 <div class="card-header">
                   <input type="text" class="form-control" placeholder="Search" />
@@ -143,6 +161,10 @@
 </template>
 
 <script>
+// dragable
+import { Container, Draggable } from 'vue-smooth-dnd';
+// import { applyDrag, generateItems } from '../utils';
+// date picker
 import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
 import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
 
@@ -150,9 +172,28 @@ export default {
   name: 'home',
   components: {
     VueCtkDateTimePicker,
+    Container,
+    Draggable,
   },
   data: () => {
-    return {};
+    return {
+      items: [
+        {
+          id: '1',
+          data: 'test1',
+        },
+        {
+          id: '2',
+          data: 'test2',
+        },
+      ],
+    };
+  },
+  methods: {
+    onDrop(dropResult) {
+      console.log(dropResult);
+      // this.items = applyDrag(this.items, dropResult);
+    },
   },
 };
 </script>
