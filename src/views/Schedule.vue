@@ -6,24 +6,31 @@
         <div class="col-sm-12 col-md-6 col-lg-4 mb-1">
           <div class="row">
             <div class="col-sm-12 col-md mb-1">
-              <b-button variant="secondary" class="w-100">Options</b-button>
+              <b-button :pressed.sync="page.options" variant="secondary" class="w-100">Options</b-button>
             </div>
             <div class="col">
-              <b-button variant="secondary" class="w-100">Filters</b-button>
+              <b-button :pressed.sync="page.filters" variant="secondary" class="w-100">Filters</b-button>
             </div>
             <div class="col d-none d-md-block">
-              <b-button variant="warning" class="w-100">Edit</b-button>
+              <b-button :pressed.sync="page.edit" variant="primary" class="w-100">Edit</b-button>
             </div>
           </div>
         </div>
         <div class="col-sm-12 col-md-auto ml-auto mb-1">
-          <VueCtkDateTimePicker only-date right style="min-width: 21rem;" />
+          <div class="row">
+            <div class="col mb-1">
+              <VueCtkDateTimePicker only-date right style="min-width: 21rem;" />
+            </div>
+            <div class="col mb-1">
+              <b-button block variant="outline-primary">End</b-button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
     <div class="mt-3">
       <div class="row">
-        <div class="col-md-12 col-lg-auto pr-0">
+        <div v-if="page.options" class="col-md-12 col-lg-auto pr-0">
           <div class="card mb-4">
             <div class="card-header">
               <h5 class="m-0">Options</h5>
@@ -32,7 +39,7 @@
           </div>
         </div>
         <div class="col-md-12 col-lg">
-          <div class="card mb-3">
+          <div v-if="page.filters" class="card mb-3">
             <div class="card-header">
               <h5 class="m-0">Filters</h5>
             </div>
@@ -78,7 +85,7 @@
           </div>
           <div class="row">
             <div class="col">
-              <div class="card mb-3">
+              <div v-if="page.edit" class="card mb-3">
                 <div class="card-body">Cassiani's Schedule</div>
               </div>
               <div>
@@ -123,13 +130,13 @@
                 </div>
               </div>
             </div>
-            <div class="col-auto d-none d-xl-block">
+            <div v-if="page.edit" class="col-auto d-none d-xl-block">
               <div class="card mb-3">
-                <h6 class="card-header">Save Box</h6>
+                <h6 class="card-header">Hold Box</h6>
                 <div class="card-body">
                   <div class="simple-page">
                     <Container @drop="onDrop">
-                      <Draggable v-for="item in items" :key="item.id">
+                      <Draggable v-for="item in scheduling" :key="item.id">
                         <div class="btn btn-primary">{{item.data}}</div>
                       </Draggable>
                     </Container>
@@ -138,7 +145,7 @@
               </div>
               <div class="card">
                 <div class="card-header">
-                  <input type="text" class="form-control" placeholder="Search" />
+                  <input class="form-control" placeholder="Search" type="text" />
                 </div>
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item">
@@ -149,6 +156,9 @@
                   </li>
                   <li class="list-group-item">
                     <div>Vestibulum at eros</div>
+                  </li>
+                  <li class="list-group-item">
+                    <button @click="printt()">printt</button>
                   </li>
                 </ul>
               </div>
@@ -161,9 +171,10 @@
 </template>
 
 <script>
+// firebase
+import { db } from '@/db';
 // dragable
 import { Container, Draggable } from 'vue-smooth-dnd';
-// import { applyDrag, generateItems } from '../utils';
 // date picker
 import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
 import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
@@ -177,22 +188,30 @@ export default {
   },
   data: () => {
     return {
-      items: [
-        {
-          id: '1',
-          data: 'test1',
-        },
-        {
-          id: '2',
-          data: 'test2',
-        },
-      ],
+      // firebase
+      scheduling: [],
+
+      // page stuff
+      page: {
+        edit: true,
+        filters: true,
+        options: true,
+      },
     };
   },
+  firebase: {
+    scheduling: db.ref('/'),
+  },
+  // mounted() {
+
+  // },
   methods: {
     onDrop(dropResult) {
       console.log(dropResult);
       // this.items = applyDrag(this.items, dropResult);
+    },
+    printt() {
+      console.log(this.scheduling);
     },
   },
 };

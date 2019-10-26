@@ -15,11 +15,13 @@
     "bootstrap": "^4.3.1",
     "bootstrap-vue": "^2.0.4",
     "core-js": "^3.1.2",
+    "firebase": "^7.2.2",
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.10",
     "vue-ctk-date-time-picker": "^2.3.1",
     "vue-router": "^3.0.6",
     "vue-smooth-dnd": "^0.8.0",
+    "vuefire": "^2.2.0",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
