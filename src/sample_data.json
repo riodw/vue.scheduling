@@ -1,14 +1,16 @@
-[
-  {
-    "id": 1,
-    "data": "Test1"
-  },
-  {
-    "id": 2,
-    "data": "Test2"
-  },
-  {
-    "id": 3,
-    "data": "Test3"
-  }
-]
+{
+  "users": [
+    {
+      "first_name": "Rio",
+      "last_name": "Weber"
+    },
+    {
+      "first_name": "Steton",
+      "last_name": "Weber"
+    },
+    {
+      "first_name": "Jack",
+      "last_name": "Okell"
+    }
+  ]
+}

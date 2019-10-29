@@ -61,7 +61,7 @@ import HelloWorld from '@/components/HelloWorld.vue';
 import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
 
 export default {
-  name: 'home',
+  name: 'Home',
   components: {
     HelloWorld,
     VueCtkDateTimePicker,

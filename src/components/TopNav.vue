@@ -7,10 +7,11 @@
 
       <b-collapse id="nav-text-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item to="/">Home</b-nav-item>
-          <b-nav-item to="/schedule">Schedule</b-nav-item>
+          <b-nav-item to="/home">Home</b-nav-item>
           <b-nav-item to="/calendar">Calendar</b-nav-item>
-          <b-nav-item to="/swap">Swap</b-nav-item>
+          <b-nav-item to="/schedule">Schedule</b-nav-item>
+          <!-- <b-nav-item to="/swap">Swap</b-nav-item> -->
+          <b-nav-item to="/engagements">Engagements</b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
           <b-nav-item-dropdown right no-caret>

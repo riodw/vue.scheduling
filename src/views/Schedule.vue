@@ -180,7 +180,7 @@ import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
 import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
 
 export default {
-  name: 'home',
+  name: 'Schedule',
   components: {
     VueCtkDateTimePicker,
     Container,
