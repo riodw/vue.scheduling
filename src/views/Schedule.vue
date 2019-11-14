@@ -6,13 +6,28 @@
         <div class="col-sm-12 col-md-6 col-lg-4 mb-1">
           <div class="row">
             <div class="col-sm-12 col-md mb-1">
-              <b-button :pressed.sync="page.options" variant="secondary" class="w-100">Options</b-button>
+              <b-button
+                :pressed.sync="page.options"
+                variant="secondary"
+                class="w-100"
+                >Options</b-button
+              >
             </div>
             <div class="col">
-              <b-button :pressed.sync="page.filters" variant="secondary" class="w-100">Filters</b-button>
+              <b-button
+                :pressed.sync="page.filters"
+                variant="secondary"
+                class="w-100"
+                >Filters</b-button
+              >
             </div>
             <div class="col d-none d-md-block">
-              <b-button :pressed.sync="page.edit" variant="primary" class="w-100">Edit</b-button>
+              <b-button
+                :pressed.sync="page.edit"
+                variant="primary"
+                class="w-100"
+                >Edit</b-button
+              >
             </div>
           </div>
         </div>
@@ -135,9 +150,11 @@
                 <h6 class="card-header">Hold Box</h6>
                 <div class="card-body">
                   <div class="simple-page">
-                    <Container @drop="onDrop">
-                      <Draggable v-for="item in scheduling" :key="item.id">
-                        <div class="btn btn-primary">{{item.data}}</div>
+                    <Container group-name="drag-a" @drop="onDrop">
+                      <Draggable v-for="item in hold_box" :key="item.id">
+                        <div class="btn btn-primary mb-1"
+                          >{{ item.first_name }}&nbsp;{{ item.last_name }}</div
+                        >
                       </Draggable>
                     </Container>
                   </div>
@@ -145,22 +162,28 @@
               </div>
               <div class="card">
                 <div class="card-header">
-                  <input class="form-control" placeholder="Search" type="text" />
+                  <input
+                    class="form-control"
+                    placeholder="Search"
+                    type="text"
+                  />
                 </div>
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item">
-                    <div>Cassiani</div>
-                  </li>
-                  <li class="list-group-item">
-                    <div>Dapibus ac facilisis in</div>
-                  </li>
-                  <li class="list-group-item">
-                    <div>Vestibulum at eros</div>
-                  </li>
-                  <li class="list-group-item">
-                    <button @click="printt()">printt</button>
-                  </li>
-                </ul>
+                <Container
+                  tag="ul"
+                  group-name="drag-a"
+                  @drop="onDrop"
+                  @drag-start="(e) => log('drag start', e)"
+                  class="list-group list-group-flush"
+                >
+                  <Draggable
+                    tag="li"
+                    v-for="item in users"
+                    :key="item.id"
+                    class="list-group-item"
+                  >
+                    {{ item.first_name }}&nbsp;{{ item.last_name }}
+                  </Draggable>
+                </Container>
               </div>
             </div>
           </div>
@@ -189,7 +212,9 @@ export default {
   data: () => {
     return {
       // firebase
+      users: [],
       scheduling: [],
+      hold_box: [],
 
       // page stuff
       page: {
@@ -200,22 +225,26 @@ export default {
     };
   },
   firebase: {
+    users: db.ref('/users'),
     scheduling: db.ref('/'),
   },
-  // mounted() {
-
-  // },
+  mounted() {
+    // update
+    console.log(this.users);
+  },
   methods: {
     onDrop(dropResult) {
       console.log(dropResult);
-      // this.items = applyDrag(this.items, dropResult);
+      // this.users = applyDrag(this.users, dropResult);
     },
     printt() {
       console.log(this.scheduling);
+    },
+    log(...params) {
+      console.log(...params);
     },
   },
 };
 </script>
 
-<style scoped lang="scss">
-</style>
+<style scoped lang="scss"></style>

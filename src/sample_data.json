@@ -1,14 +1,17 @@
 {
   "users": [
     {
+      "id": 1,
       "first_name": "Rio",
       "last_name": "Weber"
     },
     {
+      "id": 2,
       "first_name": "Steton",
       "last_name": "Weber"
     },
     {
+      "id": 3,
       "first_name": "Jack",
       "last_name": "Okell"
     }
