@@ -150,7 +150,7 @@
                 <h6 class="card-header">Hold Box</h6>
                 <div class="card-body">
                   <div class="simple-page">
-                    <Container group-name="drag-a" @drop="onDrop">
+                    <Container group-name="drag-a">
                       <Draggable v-for="item in hold_box" :key="item.id">
                         <div class="btn btn-primary mb-1"
                           >{{ item.first_name }}&nbsp;{{ item.last_name }}</div
@@ -171,8 +171,11 @@
                 <Container
                   tag="ul"
                   group-name="drag-a"
-                  @drop="onDrop"
                   @drag-start="(e) => log('drag start', e)"
+                  @drop="(e) => onCardDrop(e)"
+                  :get-child-payload="getChildPayload()"
+                  drop-class="card-ghost-drop"
+                  drag-class="card-ghost"
                   class="list-group list-group-flush"
                 >
                   <Draggable
@@ -181,7 +184,7 @@
                     :key="item.id"
                     class="list-group-item"
                   >
-                    {{ item.first_name }}&nbsp;{{ item.last_name }}
+                    <div> {{ item.first_name }}&nbsp;{{ item.last_name }} </div>
                   </Draggable>
                 </Container>
               </div>
@@ -233,7 +236,7 @@ export default {
     console.log(this.users);
   },
   methods: {
-    onDrop(dropResult) {
+    onCardDrop(dropResult) {
       console.log(dropResult);
       // this.users = applyDrag(this.users, dropResult);
     },
@@ -243,8 +246,27 @@ export default {
     log(...params) {
       console.log(...params);
     },
+    getChildPayload() {
+      return () => {
+        return {
+          key: 'this',
+        };
+      };
+    },
   },
 };
 </script>
+
+<style>
+.card-ghost {
+  transition: transform 0.18s ease;
+  transform: rotateZ(5deg);
+  background-color: yellow;
+}
+.card-ghost-drop {
+  transition: transform 0.18s ease-in-out;
+  transform: rotateZ(0deg);
+}
+</style>
 
 <style scoped lang="scss"></style>
