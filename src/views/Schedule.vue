@@ -145,12 +145,16 @@
                 </div>
               </div>
             </div>
-            <div v-if="page.edit" class="col-auto d-none d-xl-block">
+            <div
+              v-if="page.edit"
+              class="col-auto d-none d-xl-block"
+              style="min-width: 20rem;"
+            >
               <div class="card mb-3">
                 <h6 class="card-header">Hold Box</h6>
                 <div class="card-body">
                   <div class="simple-page">
-                    <Container group-name="drag-a">
+                    <Container group-name="drag-a" @drop="(e) => onCardDrop(e)">
                       <Draggable v-for="item in hold_box" :key="item.id">
                         <div class="btn btn-primary mb-1"
                           >{{ item.first_name }}&nbsp;{{ item.last_name }}</div
@@ -161,18 +165,19 @@
                 </div>
               </div>
               <div class="card">
-                <div class="card-header">
+                <h6 class="card-header">People</h6>
+                <!-- <div class="card-header">
                   <input
                     class="form-control"
                     placeholder="Search"
                     type="text"
                   />
-                </div>
+                </div> -->
                 <Container
                   tag="ul"
                   group-name="drag-a"
-                  @drag-start="(e) => log('drag start', e)"
-                  @drop="(e) => onCardDrop(e)"
+                  @drag-start="(e) => onCardDrag(e)"
+                  @drop="(e) => onCardDrop('people', e)"
                   :get-child-payload="getChildPayload()"
                   drop-class="card-ghost-drop"
                   drag-class="card-ghost"
@@ -232,13 +237,39 @@ export default {
     scheduling: db.ref('/'),
   },
   mounted() {
+    var vm = this;
     // update
-    console.log(this.users);
+    // for (var i = 0; i < vm.; i++) {
+
+    // }
+    console.log(vm.users);
   },
   methods: {
-    onCardDrop(dropResult) {
-      console.log(dropResult);
+    onCardDrag(dropResult) {
+      // var vm = this;
+      console.log('drag start', dropResult);
       // this.users = applyDrag(this.users, dropResult);
+    },
+    onCardDrop(place, dropResult) {
+      var vm = this;
+      if (
+        dropResult &&
+        (dropResult.removedIndex !== null || dropResult.addedIndex !== null)
+      ) {
+        vm.users = vm.applyDrag(vm.users, dropResult);
+        // vm.hold_box = vm.applyDrag(vm.hold_box, dropResult);
+
+        // if (place === 'people') {
+
+        // }
+        // console.log('drop', dropResult);
+        // console.log('drop', dropResult.payload);
+        // console.log('drop', dropResult.payload);
+        // console.log(dropResult.removedIndex);
+        // console.log(dropResult.addedIndex);
+
+        // vm.hold_box.push(dropResult.payload);
+      }
     },
     printt() {
       console.log(this.scheduling);
@@ -247,11 +278,27 @@ export default {
       console.log(...params);
     },
     getChildPayload() {
-      return () => {
-        return {
-          key: 'this',
-        };
+      var vm = this;
+      return (index) => {
+        return vm.users[index];
       };
+    },
+    applyDrag(arr, dragResult) {
+      const { removedIndex, addedIndex, payload } = dragResult;
+      if (removedIndex === null && addedIndex === null) return arr;
+
+      const result = [...arr];
+      let itemToAdd = payload;
+
+      if (removedIndex !== null) {
+        itemToAdd = result.splice(removedIndex, 1)[0];
+      }
+
+      if (addedIndex !== null) {
+        result.splice(addedIndex, 0, itemToAdd);
+      }
+
+      return result;
     },
   },
 };
