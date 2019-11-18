@@ -132,13 +132,31 @@
                     <tbody>
                       <tr>
                         <th>Shift 1</th>
-                        <td>Rio</td>
-                        <td>Rio</td>
-                        <td>Rio</td>
-                        <td>Rio</td>
-                        <td>Rio</td>
-                        <td>Rio</td>
-                        <td>Rio</td>
+                        <td v-for="(person, index) in seven" :key="index">
+                          <Container
+                            group-name="drag-a"
+                            @drag-start="(e) => onCardDrag(e)"
+                            @drop="(e) => onCardDropSchedule(index, e)"
+                            :get-child-payload="getChildPayload()"
+                            :should-accept-drop="
+                              (src, payload) =>
+                                shouldAcceptDrop(index, src, payload)
+                            "
+                            drop-class="card-ghost-drop"
+                            drag-class="card-ghost"
+                          >
+                            <Draggable
+                              v-for="item in seven[index]"
+                              :key="item.id"
+                            >
+                              <div class="btn btn-primary border"
+                                >{{ item.first_name }}&nbsp;{{
+                                  item.last_name
+                                }}</div
+                              >
+                            </Draggable>
+                          </Container>
+                        </td>
                       </tr>
                     </tbody>
                   </table>
@@ -147,14 +165,25 @@
             </div>
             <div
               v-if="page.edit"
-              class="col-auto d-none d-xl-block"
+              class="col-auto d-none d-xl-block pl-0"
               style="min-width: 20rem;"
             >
               <div class="card mb-3">
                 <h6 class="card-header">Hold Box</h6>
                 <div class="card-body">
                   <div class="simple-page">
-                    <Container group-name="drag-a" @drop="(e) => onCardDrop(e)">
+                    <Container
+                      group-name="drag-a"
+                      @drag-start="(e) => onCardDrag(e)"
+                      @drop="(e) => onCardDrop('hold_box', e)"
+                      :get-child-payload="getChildPayload()"
+                      :should-accept-drop="
+                        (src, payload) => shouldAcceptDrop(index, src, payload)
+                      "
+                      drop-class="card-ghost-drop"
+                      drag-class="card-ghost"
+                      class="list-group list-group-flush"
+                    >
                       <Draggable v-for="item in hold_box" :key="item.id">
                         <div class="btn btn-primary mb-1"
                           >{{ item.first_name }}&nbsp;{{ item.last_name }}</div
@@ -164,30 +193,35 @@
                   </div>
                 </div>
               </div>
-              <div class="card">
-                <h6 class="card-header">People</h6>
-                <!-- <div class="card-header">
+              <div class="card mb-3">
+                <!-- <h6 class="card-header">People</h6> -->
+                <div class="card-header">
                   <input
                     class="form-control"
-                    placeholder="Search"
+                    placeholder="Search People"
                     type="text"
                   />
-                </div> -->
+                </div>
                 <Container
                   tag="ul"
                   group-name="drag-a"
                   @drag-start="(e) => onCardDrag(e)"
-                  @drop="(e) => onCardDrop('people', e)"
+                  @drop="(e) => onCardDrop('users', e)"
                   :get-child-payload="getChildPayload()"
-                  drop-class="card-ghost-drop"
-                  drag-class="card-ghost"
+                  :should-accept-drop="
+                    (e) => {
+                      false;
+                    }
+                  "
+                  non-drag-area-selector="disable-drag"
+                  drag-class="btn btn-primary"
                   class="list-group list-group-flush"
                 >
                   <Draggable
                     tag="li"
                     v-for="item in users"
                     :key="item.id"
-                    class="list-group-item"
+                    class="list-group-item disable-drag"
                   >
                     <div> {{ item.first_name }}&nbsp;{{ item.last_name }} </div>
                   </Draggable>
@@ -223,6 +257,21 @@ export default {
       users: [],
       scheduling: [],
       hold_box: [],
+      seven: [
+        [
+          {
+            id: 3,
+            first_name: 'Jack',
+            last_name: 'Okell',
+          },
+        ],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+      ],
 
       // page stuff
       page: {
@@ -248,28 +297,17 @@ export default {
     onCardDrag(dropResult) {
       // var vm = this;
       console.log('drag start', dropResult);
+
+      // vm.$forceUpdate();
       // this.users = applyDrag(this.users, dropResult);
     },
     onCardDrop(place, dropResult) {
       var vm = this;
-      if (
-        dropResult &&
-        (dropResult.removedIndex !== null || dropResult.addedIndex !== null)
-      ) {
-        vm.users = vm.applyDrag(vm.users, dropResult);
-        // vm.hold_box = vm.applyDrag(vm.hold_box, dropResult);
-
-        // if (place === 'people') {
-
-        // }
-        // console.log('drop', dropResult);
-        // console.log('drop', dropResult.payload);
-        // console.log('drop', dropResult.payload);
-        // console.log(dropResult.removedIndex);
-        // console.log(dropResult.addedIndex);
-
-        // vm.hold_box.push(dropResult.payload);
-      }
+      vm[place] = vm.applyDrag(vm[place], dropResult);
+    },
+    onCardDropSchedule(index, dropResult) {
+      var vm = this;
+      vm.seven[index] = vm.applyDrag(vm.seven[index], dropResult);
     },
     printt() {
       console.log(this.scheduling);
@@ -282,6 +320,9 @@ export default {
       return (index) => {
         return vm.users[index];
       };
+    },
+    shouldAcceptDrop() {
+      return true;
     },
     applyDrag(arr, dragResult) {
       const { removedIndex, addedIndex, payload } = dragResult;
@@ -308,7 +349,6 @@ export default {
 .card-ghost {
   transition: transform 0.18s ease;
   transform: rotateZ(5deg);
-  background-color: yellow;
 }
 .card-ghost-drop {
   transition: transform 0.18s ease-in-out;
