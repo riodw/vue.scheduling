@@ -108,7 +108,7 @@
                 <div class="table-responsive">
                   <table class="table table-bordered table-sm bg-white">
                     <thead>
-                      <tr>
+                      <!-- <tr>
                         <th></th>
                         <th>Sunday</th>
                         <th>Monday</th>
@@ -117,36 +117,36 @@
                         <th>Thursday</th>
                         <th>Friday</th>
                         <th>Saturday</th>
-                      </tr>
+                      </tr> -->
                       <tr>
                         <th></th>
                         <th>Jun, 9</th>
                         <th>Jun, 10</th>
                         <th>Jun, 11</th>
-                        <th>Jun, 12</th>
+                        <!-- <th>Jun, 12</th>
                         <th>Jun, 13</th>
                         <th>Jun, 14</th>
-                        <th>Jun, 15</th>
+                        <th>Jun, 15</th> -->
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
                         <th>Shift 1</th>
-                        <td v-for="(person, index) in seven" :key="index">
+                        <td v-for="column in seven" :key="column.id">
+                          <!-- :should-accept-drop="
+                              (src, payload) =>
+                                shouldAcceptDrop(index, src, payload)
+                            " -->
                           <Container
                             group-name="drag-a"
                             @drag-start="(e) => onCardDrag(e)"
-                            @drop="(e) => onCardDropSchedule(index, e)"
-                            :get-child-payload="getChildPayload()"
-                            :should-accept-drop="
-                              (src, payload) =>
-                                shouldAcceptDrop(index, src, payload)
-                            "
+                            @drop="(e) => onCardDropSchedule(column.id, e)"
+                            :get-child-payload="getChildPayload(column.id)"
                             drop-class="card-ghost-drop"
                             drag-class="card-ghost"
                           >
                             <Draggable
-                              v-for="item in seven[index]"
+                              v-for="item in column.children"
                               :key="item.id"
                             >
                               <div class="btn btn-primary border"
@@ -164,7 +164,7 @@
               </div>
             </div>
             <div
-              v-if="page.edit"
+              v-if="false && page.edit"
               class="col-auto d-none d-xl-block pl-0"
               style="min-width: 20rem;"
             >
@@ -223,7 +223,7 @@
                     :key="item.id"
                     class="list-group-item disable-drag"
                   >
-                    <div> {{ item.first_name }}&nbsp;{{ item.last_name }} </div>
+                    <div>{{ item.first_name }}&nbsp;{{ item.last_name }}</div>
                   </Draggable>
                 </Container>
               </div>
@@ -258,74 +258,86 @@ export default {
       scheduling: [],
       hold_box: [],
       seven: [
-        [
-          {
-            id: 3,
-            first_name: 'Jack',
-            last_name: 'Okell',
-          },
-        ],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
+        {
+          id: 1,
+          children: [],
+        },
+        {
+          id: 2,
+          children: [],
+        },
+        {
+          id: 3,
+          children: [],
+        },
+        // [],
+        // [],
+        // [],
+        // [],
       ],
 
       // page stuff
       page: {
-        edit: true,
-        filters: true,
-        options: true,
+        edit: false,
+        filters: false,
+        options: false,
+      },
+      // loaded
+      loaded: {
+        users: false,
       },
     };
   },
   firebase: {
     users: db.ref('/users'),
-    scheduling: db.ref('/'),
   },
+  // firebase: {
+  //   users: db.ref('/users'),
+  //   // scheduling: db.ref('/'),
+  // },
   mounted() {
-    var vm = this;
-    // update
-    // for (var i = 0; i < vm.; i++) {
-
-    // }
-    console.log(vm.users);
+    // var vm = this;
+    // vm.seven[0].push(vm.users[0]);
+    // console.log(vm.users);
   },
   methods: {
-    onCardDrag(dropResult) {
+    onCardDrag(drop_result) {
       // var vm = this;
-      console.log('drag start', dropResult);
+      return drop_result;
+      // console.log('drag start', drop_result);
 
-      // vm.$forceUpdate();
-      // this.users = applyDrag(this.users, dropResult);
+      // this.users = applyDrag(this.users, drop_result);
     },
-    onCardDrop(place, dropResult) {
+    // onCardDrop(place, drop_result) {
+    //   var vm = this;
+    //   vm[place] = vm.applyDrag(vm[place], drop_result);
+    //   vm.$forceUpdate();
+    // },
+    onCardDropSchedule(column_id, drop_result) {
+      console.log(column_id, drop_result);
       var vm = this;
-      vm[place] = vm.applyDrag(vm[place], dropResult);
+      if (
+        drop_result.removedIndex !== null ||
+        drop_result.addedIndex !== null
+      ) {
+        var column = vm.seven.filter((p) => p.id === column_id)[0];
+        column.children = vm.applyDrag(column.children, drop_result);
+      }
     },
-    onCardDropSchedule(index, dropResult) {
-      var vm = this;
-      vm.seven[index] = vm.applyDrag(vm.seven[index], dropResult);
-    },
-    printt() {
-      console.log(this.scheduling);
-    },
-    log(...params) {
-      console.log(...params);
-    },
-    getChildPayload() {
+    getChildPayload(column_id = null) {
       var vm = this;
       return (index) => {
-        return vm.users[index];
+        var column = vm.seven.filter((p) => p.id === column_id);
+        // console.log(column_id, column);
+        return column[0].children[index];
       };
     },
     shouldAcceptDrop() {
       return true;
     },
-    applyDrag(arr, dragResult) {
-      const { removedIndex, addedIndex, payload } = dragResult;
+    applyDrag(arr, drop_result) {
+      // console.log(arr, drop_result);
+      const { removedIndex, addedIndex, payload } = drop_result;
       if (removedIndex === null && addedIndex === null) return arr;
 
       const result = [...arr];
@@ -340,6 +352,17 @@ export default {
       }
 
       return result;
+    },
+  },
+  watch: {
+    users: {
+      handler(users) {
+        var vm = this;
+        if (!vm.loaded.users) {
+          vm.seven[0].children = users;
+          vm.loaded.users = true;
+        }
+      },
     },
   },
 };
