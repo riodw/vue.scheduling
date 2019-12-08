@@ -150,9 +150,8 @@
                               :key="item.id"
                             >
                               <div class="btn btn-primary border"
-                                >{{ item.first_name }}&nbsp;{{
-                                  item.last_name
-                                }}</div
+                                >{{ item.first_name[0]
+                                }}{{ item.last_name[0] }}</div
                               >
                             </Draggable>
                           </Container>
@@ -164,11 +163,11 @@
               </div>
             </div>
             <div
-              v-if="false && page.edit"
+              v-if="page.edit"
               class="col-auto d-none d-xl-block pl-0"
               style="min-width: 20rem;"
             >
-              <div class="card mb-3">
+              <div v-if="false" class="card mb-3">
                 <h6 class="card-header">Hold Box</h6>
                 <div class="card-body">
                   <div class="simple-page">
@@ -202,28 +201,24 @@
                     type="text"
                   />
                 </div>
+                <!-- @drag-start="(e) => onCardDrag(e)"
+                  @drop="(e) => onCardDrop('users', e)" -->
                 <Container
-                  tag="ul"
+                  id="search_people"
                   group-name="drag-a"
-                  @drag-start="(e) => onCardDrag(e)"
-                  @drop="(e) => onCardDrop('users', e)"
                   :get-child-payload="getChildPayload()"
                   :should-accept-drop="
                     (e) => {
                       false;
                     }
                   "
-                  non-drag-area-selector="disable-drag"
-                  drag-class="btn btn-primary"
+                  drag-class="btn btn-primary card-ghost btn-drag"
                   class="list-group list-group-flush"
                 >
-                  <Draggable
-                    tag="li"
-                    v-for="item in users"
-                    :key="item.id"
-                    class="list-group-item disable-drag"
-                  >
-                    <div>{{ item.first_name }}&nbsp;{{ item.last_name }}</div>
+                  <Draggable v-for="item in users" :key="item.id" class="">
+                    <div class="btn"
+                      >{{ item.first_name }}&nbsp;{{ item.last_name }}</div
+                    >
                   </Draggable>
                 </Container>
               </div>
@@ -278,7 +273,7 @@ export default {
 
       // page stuff
       page: {
-        edit: false,
+        edit: true,
         filters: false,
         options: false,
       },
@@ -314,7 +309,7 @@ export default {
     //   vm.$forceUpdate();
     // },
     onCardDropSchedule(column_id, drop_result) {
-      console.log(column_id, drop_result);
+      // console.log(column_id, drop_result);
       var vm = this;
       if (
         drop_result.removedIndex !== null ||
@@ -324,19 +319,24 @@ export default {
         column.children = vm.applyDrag(column.children, drop_result);
       }
     },
-    getChildPayload(column_id = null) {
+    getChildPayload(column_id) {
       var vm = this;
-      return (index) => {
-        var column = vm.seven.filter((p) => p.id === column_id);
-        // console.log(column_id, column);
-        return column[0].children[index];
-      };
+      if (column_id) {
+        return (index) => {
+          var column = vm.seven.filter((p) => p.id === column_id);
+          return column[0].children[index];
+        };
+      } else {
+        return (index) => {
+          return vm.users[index];
+        };
+      }
     },
     shouldAcceptDrop() {
       return true;
     },
     applyDrag(arr, drop_result) {
-      // console.log(arr, drop_result);
+      console.log(arr, drop_result);
       const { removedIndex, addedIndex, payload } = drop_result;
       if (removedIndex === null && addedIndex === null) return arr;
 
@@ -348,7 +348,11 @@ export default {
       }
 
       if (addedIndex !== null) {
-        result.splice(addedIndex, 0, itemToAdd);
+        if (result.includes(itemToAdd)) {
+          alert('Already added');
+        } else {
+          result.splice(addedIndex, 0, itemToAdd);
+        }
       }
 
       return result;
@@ -358,8 +362,8 @@ export default {
     users: {
       handler(users) {
         var vm = this;
-        if (!vm.loaded.users) {
-          vm.seven[0].children = users;
+        if (users.length && !vm.loaded.users) {
+          vm.seven[0].children = [users[0], users[1]];
           vm.loaded.users = true;
         }
       },
@@ -377,6 +381,20 @@ export default {
   transition: transform 0.18s ease-in-out;
   transform: rotateZ(0deg);
 }
+.btn-drag {
+  width: auto !important;
+  border: none !important;
+  text-align: center !important;
+}
 </style>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+#search_people .btn {
+  width: 100%;
+  text-align: left;
+  border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
+#search_people div:first-of-type .btn {
+  border: none;
+}
+</style>
