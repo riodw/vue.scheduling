@@ -108,7 +108,7 @@
                 <div class="table-responsive">
                   <table class="table table-bordered table-sm bg-white">
                     <thead>
-                      <!-- <tr>
+                      <tr>
                         <th></th>
                         <th>Sunday</th>
                         <th>Monday</th>
@@ -117,16 +117,16 @@
                         <th>Thursday</th>
                         <th>Friday</th>
                         <th>Saturday</th>
-                      </tr> -->
+                      </tr>
                       <tr>
                         <th></th>
                         <th>Jun, 9</th>
                         <th>Jun, 10</th>
                         <th>Jun, 11</th>
-                        <!-- <th>Jun, 12</th>
+                        <th>Jun, 12</th>
                         <th>Jun, 13</th>
                         <th>Jun, 14</th>
-                        <th>Jun, 15</th> -->
+                        <th>Jun, 15</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -141,9 +141,11 @@
                             group-name="drag-a"
                             @drag-start="(e) => onCardDrag(e)"
                             @drop="(e) => onCardDropSchedule(column.id, e)"
-                            :get-child-payload="getChildPayload(column.id)"
+                            :get-child-payload="
+                              getChildPayloadFromTable(column.id)
+                            "
                             drop-class="card-ghost-drop"
-                            drag-class="card-ghost"
+                            drag-class="card-ghost shadow-lg"
                           >
                             <Draggable
                               v-for="item in column.children"
@@ -167,18 +169,17 @@
               class="col-auto d-none d-xl-block pl-0"
               style="min-width: 20rem;"
             >
-              <div v-if="false" class="card mb-3">
+              <div class="card mb-3">
                 <h6 class="card-header">Hold Box</h6>
                 <div class="card-body">
                   <div class="simple-page">
                     <Container
                       group-name="drag-a"
-                      @drag-start="(e) => onCardDrag(e)"
-                      @drop="(e) => onCardDrop('hold_box', e)"
-                      :get-child-payload="getChildPayload()"
+                      @drop="(e) => onCardDrop(e)"
                       :should-accept-drop="
-                        (src, payload) => shouldAcceptDrop(index, src, payload)
+                        (src, payload) => shouldAcceptDrop(hold_box, payload)
                       "
+                      :get-child-payload="getChildPayloadFromHoldBox()"
                       drop-class="card-ghost-drop"
                       drag-class="card-ghost"
                       class="list-group list-group-flush"
@@ -193,7 +194,6 @@
                 </div>
               </div>
               <div class="card mb-3">
-                <!-- <h6 class="card-header">People</h6> -->
                 <div class="card-header">
                   <input
                     class="form-control"
@@ -201,12 +201,11 @@
                     type="text"
                   />
                 </div>
-                <!-- @drag-start="(e) => onCardDrag(e)"
-                  @drop="(e) => onCardDrop('users', e)" -->
+                <!-- @drag-start="(e) => onCardDrag(e)" -->
                 <Container
                   id="search_people"
                   group-name="drag-a"
-                  :get-child-payload="getChildPayload()"
+                  :get-child-payload="getChildPayloadFromUsers()"
                   :should-accept-drop="
                     (e) => {
                       false;
@@ -265,10 +264,22 @@ export default {
           id: 3,
           children: [],
         },
-        // [],
-        // [],
-        // [],
-        // [],
+        {
+          id: 4,
+          children: [],
+        },
+        {
+          id: 5,
+          children: [],
+        },
+        {
+          id: 6,
+          children: [],
+        },
+        {
+          id: 7,
+          children: [],
+        },
       ],
 
       // page stuff
@@ -303,11 +314,15 @@ export default {
 
       // this.users = applyDrag(this.users, drop_result);
     },
-    // onCardDrop(place, drop_result) {
-    //   var vm = this;
-    //   vm[place] = vm.applyDrag(vm[place], drop_result);
-    //   vm.$forceUpdate();
-    // },
+    onCardDrop(drop_result) {
+      var vm = this;
+      if (
+        vm.hold_box.length < 4 &&
+        !vm.hold_box.includes(drop_result.payload)
+      ) {
+        vm.hold_box.push(drop_result.payload);
+      }
+    },
     onCardDropSchedule(column_id, drop_result) {
       // console.log(column_id, drop_result);
       var vm = this;
@@ -319,20 +334,27 @@ export default {
         column.children = vm.applyDrag(column.children, drop_result);
       }
     },
-    getChildPayload(column_id) {
+    getChildPayloadFromUsers() {
       var vm = this;
-      if (column_id) {
-        return (index) => {
-          var column = vm.seven.filter((p) => p.id === column_id);
-          return column[0].children[index];
-        };
-      } else {
-        return (index) => {
-          return vm.users[index];
-        };
-      }
+      return (index) => {
+        return vm.users[index];
+      };
     },
-    shouldAcceptDrop() {
+    getChildPayloadFromTable(column_id) {
+      var vm = this;
+      return (index) => {
+        var column = vm.seven.filter((p) => p.id === column_id);
+        return column[0].children[index];
+      };
+    },
+    getChildPayloadFromHoldBox() {
+      var vm = this;
+      return (index) => {
+        return vm.hold_box[index];
+      };
+    },
+    shouldAcceptDrop(array, payload) {
+      console.log(array, payload);
       return true;
     },
     applyDrag(arr, drop_result) {
@@ -364,6 +386,7 @@ export default {
         var vm = this;
         if (users.length && !vm.loaded.users) {
           vm.seven[0].children = [users[0], users[1]];
+          vm.hold_box.push(users[2]);
           vm.loaded.users = true;
         }
       },
@@ -376,6 +399,7 @@ export default {
 .card-ghost {
   transition: transform 0.18s ease;
   transform: rotateZ(5deg);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.175) !important;
 }
 .card-ghost-drop {
   transition: transform 0.18s ease-in-out;
