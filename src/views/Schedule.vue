@@ -316,11 +316,11 @@ export default {
     },
     onCardDrop(drop_result) {
       var vm = this;
-      if (
-        vm.hold_box.length < 4 &&
-        !vm.hold_box.includes(drop_result.payload)
-      ) {
-        vm.hold_box.push(drop_result.payload);
+      if (!vm.hold_box.includes(drop_result.payload)) {
+        if (vm.hold_box.length > 4) {
+          vm.hold_box.pop();
+        }
+        vm.hold_box.unshift(drop_result.payload);
       }
     },
     onCardDropSchedule(column_id, drop_result) {

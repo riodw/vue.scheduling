@@ -12,6 +12,7 @@
           <b-nav-item to="/schedule">Schedule</b-nav-item>
           <!-- <b-nav-item to="/swap">Swap</b-nav-item> -->
           <b-nav-item to="/engagements">Engagements</b-nav-item>
+          <b-nav-item to="/engagements">Places</b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
           <b-nav-item-dropdown right no-caret>
