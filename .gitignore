@@ -3,6 +3,9 @@ node_modules
 /dist
 inspiration
 
+# Private Files
+auth_config.json
+
 # local env files
 .env.local
 .env.*.local
