@@ -6,9 +6,9 @@ import store from './store';
 // PLUGINS
 import { rtdbPlugin } from 'vuefire';
 import BootstrapVue from 'bootstrap-vue';
-// Import the Auth0 configuration
+// Auth0 - Import the Auth0 configuration
 import { domain, clientId } from '../auth_config.json';
-// Import the plugin here
+// Auth0 - Import the plugin here
 import { Auth0Plugin } from './auth';
 /** CSS */
 import 'bootstrap/dist/css/bootstrap.css';
@@ -25,7 +25,7 @@ library.add(faTrashAlt);
 /** COMPONENTS */
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 /** USE */
-// Install the authentication plugin here
+// Auth0 - Install the authentication plugin here
 Vue.use(Auth0Plugin, {
   domain,
   clientId,
