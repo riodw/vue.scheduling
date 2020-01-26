@@ -26,7 +26,9 @@
                 />
               </div>
             </template>
-            <b-dropdown-item href="#">Profile</b-dropdown-item>
+            <b-dropdown-item v-if="$auth.isAuthenticated" to="/profile">
+              {{ $auth.user.name }}
+            </b-dropdown-item>
             <li>
               <div class="dropdown-item">
                 <Auth0 />

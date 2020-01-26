@@ -1,6 +1,10 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
+import Profile from '../views/Profile.vue';
+
+// authentication guard
+import { authGuard } from '../auth/authGuard';
 
 Vue.use(VueRouter);
 
@@ -23,6 +27,13 @@ const routes = [
     path: '/engagements',
     name: 'engagements',
     component: () => import('../views/Engagements.vue'),
+  },
+  // NEW - add the route to the /profile component
+  {
+    path: '/profile',
+    name: 'profile',
+    component: Profile,
+    beforeEnter: authGuard,
   },
   // {
   //   path: '/about',
