@@ -9,28 +9,32 @@
               :pressed.sync="page.options"
               variant="secondary"
               class="w-100"
-              >Options</b-button
             >
+              Display
+            </b-button>
           </div>
           <div class="col">
             <b-button
               :pressed.sync="page.filters"
               variant="secondary"
               class="w-100"
-              >Filters</b-button
             >
+              Filters
+            </b-button>
           </div>
           <div class="col d-none d-md-block">
-            <b-button :pressed.sync="page.edit" variant="primary" class="w-100"
-              >Edit</b-button
-            >
+            <b-button :pressed.sync="page.edit" variant="primary" class="w-100">
+              Edit
+            </b-button>
           </div>
         </div>
       </div>
       <div class="col-sm-12 col-md-auto ml-auto mb-1">
         <div class="row">
           <div class="col mb-1">
-            <b-button block variant="outline-primary">Properties</b-button>
+            <b-button block variant="outline-primary">
+              Properties
+            </b-button>
           </div>
           <div class="col mb-1">
             <b-button block variant="primary">New</b-button>
@@ -78,34 +82,57 @@
         </div>
       </div>
 
-      <table class="table">
-        <thead>
-          <tr>
-            <th
-              v-for="user_property in user_properties"
-              :key="user_property.id"
-            >
-              {{ user_property }}
-            </th>
-            <th scope="col">
-              <b-dropdown right text="+" variant="primary" no-caret>
-                <b-dropdown-item
-                  @click="newProperty(property)"
-                  v-for="property in property_types"
-                  :key="property.id"
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover bg-white">
+          <thead>
+            <tr>
+              <th
+                v-for="user_property in user_properties"
+                :key="user_property['.key']"
+              >
+                <b-dropdown
+                  right
+                  no-flip
+                  :text="user_property.name"
+                  variant="link"
+                  no-caret
                 >
-                  {{ property.name }}
-                </b-dropdown-item>
-              </b-dropdown>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="user in users" :key="user.id">
-            <td>{{ user }}</td>
-          </tr>
-        </tbody>
-      </table>
+                  <b-dropdown-form>
+                    <b-input-group style="width: 200px;">
+                      <template v-slot:append>
+                        <b-button type="reset" variant="danger">V</b-button>
+                      </template>
+                      <b-form-input
+                        :value="user_property.name"
+                        placeholder="Property name"
+                      ></b-form-input>
+                    </b-input-group>
+                  </b-dropdown-form>
+                  <b-dropdown-item>
+                    asdf
+                  </b-dropdown-item>
+                </b-dropdown>
+              </th>
+              <th scope="col">
+                <b-dropdown right text="+" variant="primary" no-caret>
+                  <b-dropdown-item
+                    @click="newProperty(property)"
+                    v-for="property in property_types"
+                    :key="property.id"
+                  >
+                    {{ property.name }}
+                  </b-dropdown-item>
+                </b-dropdown>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="user in users" :key="user.id">
+              <td>{{ user }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </template>
@@ -137,16 +164,21 @@ export default {
     };
   },
   firebase: {
-    property_types: db.ref('/property_types'),
     users: db.ref('/users'),
+    property_types: db.ref('/property_types'),
     user_properties: db.ref('/user_properties'),
     user_property_data: db.ref('/user_property_data'),
   },
   mounted: {},
   methods: {
     newProperty(property) {
-      // var vm = this;
-      console.log(property);
+      var vm = this;
+      console.log(vm.user_properties[0]['.key']);
+      db.ref('/user_properties').push({
+        id: 2,
+        name: 'test',
+        property_type: property.id,
+      });
     },
   },
 };
