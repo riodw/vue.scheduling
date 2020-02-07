@@ -1,7 +1,5 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/Home.vue';
-import Profile from '../views/Profile.vue';
 
 // authentication guard
 import { authGuard } from '../auth/authGuard';
@@ -16,7 +14,7 @@ const routes = [
   {
     path: '/home',
     name: 'home',
-    component: Home,
+    component: () => import('../views/Home.vue'),
   },
   {
     path: '/schedule',
@@ -32,8 +30,13 @@ const routes = [
   {
     path: '/profile',
     name: 'profile',
-    component: Profile,
+    component: () => import('../views/Profile.vue'),
     beforeEnter: authGuard,
+  },
+  {
+    path: '/people',
+    name: 'people',
+    component: () => import('../views/People.vue'),
   },
   // {
   //   path: '/about',
