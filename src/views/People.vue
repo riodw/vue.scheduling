@@ -100,10 +100,16 @@
                   <b-dropdown-form>
                     <b-input-group style="width: 200px;">
                       <template v-slot:append>
-                        <b-button type="reset" variant="danger">V</b-button>
+                        <b-button
+                          @click="updateUserPropertyName(user_property)"
+                          type="button"
+                          variant="primary"
+                        >
+                          V
+                        </b-button>
                       </template>
                       <b-form-input
-                        :value="user_property.name"
+                        v-model="user_property.name"
                         placeholder="Property name"
                       ></b-form-input>
                     </b-input-group>
@@ -113,7 +119,7 @@
                   </b-dropdown-item>
                 </b-dropdown>
               </th>
-              <th scope="col">
+              <th scope="col" class="text-right">
                 <b-dropdown right text="+" variant="primary" no-caret>
                   <b-dropdown-item
                     @click="newProperty(property)"
@@ -179,6 +185,17 @@ export default {
         name: 'test',
         property_type: property.id,
       });
+    },
+    updateUserPropertyName(user_property) {
+      // var vm = this;
+      console.log(user_property);
+      var tt = db
+        .ref('/user_properties')
+        .child(user_property['.key'])
+        .set({
+          name: user_property.name,
+        });
+      console.log(tt);
     },
   },
 };
