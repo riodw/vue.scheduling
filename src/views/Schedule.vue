@@ -136,7 +136,7 @@
                           <!-- :should-accept-drop="
                               (src, payload) =>
                                 shouldAcceptDrop(index, src, payload)
-                            " -->
+                          "-->
                           <Container
                             group-name="drag-a"
                             @drag-start="(e) => onCardDrag(e)"
@@ -151,10 +151,9 @@
                               v-for="item in column.children"
                               :key="item.id"
                             >
-                              <div class="btn btn-primary border"
-                                >{{ item.first_name[0]
-                                }}{{ item.last_name[0] }}</div
-                              >
+                              <div class="btn btn-primary border">
+                                {{ item.first_name[0] }}{{ item.last_name[0] }}
+                              </div>
                             </Draggable>
                           </Container>
                         </td>
@@ -214,7 +213,7 @@
                   drag-class="btn btn-primary card-ghost btn-drag"
                   class="list-group list-group-flush"
                 >
-                  <Draggable v-for="item in users" :key="item.id" class="">
+                  <Draggable v-for="item in users" :key="item.id" class>
                     <div class="btn"
                       >{{ item.first_name }}&nbsp;{{ item.last_name }}</div
                     >

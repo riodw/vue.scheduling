@@ -26,6 +26,14 @@ library.add(faTrashAlt);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 /** USE */
 // Auth0 - Install the authentication plugin here
+// auth0.com/docs/quickstart/spa/vuejs/01-login
+// manage.auth0.com/dashboard/us/instatop/applications/39buMdnRkNPV9xy2XY5pNJzn851oPJ7F/settings
+/*
+{
+  "domain": "instatop.auth0.com",
+  "clientId": "39buMdnRkNPV9xy2XY5pNJzn851oPJ7F"
+}
+*/
 Vue.use(Auth0Plugin, {
   domain,
   clientId,
