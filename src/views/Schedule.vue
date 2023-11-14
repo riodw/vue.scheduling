@@ -75,8 +75,14 @@
                 <b-input-group append="or" class="mr-1 mb-1">
                   <template v-slot:prepend>
                     <b-dropdown text="is">
-                      <b-dropdown-item>Action A</b-dropdown-item>
-                      <b-dropdown-item>Action B</b-dropdown-item>
+                      <b-dropdown-item>Is</b-dropdown-item>
+                      <b-dropdown-item>Is not</b-dropdown-item>
+                      <b-dropdown-item>Contains</b-dropdown-item>
+                      <b-dropdown-item>Does not contain</b-dropdown-item>
+                      <b-dropdown-item>Starts with</b-dropdown-item>
+                      <b-dropdown-item>Ends with</b-dropdown-item>
+                      <b-dropdown-item>Is empty</b-dropdown-item>
+                      <b-dropdown-item>Is not empty</b-dropdown-item>
                     </b-dropdown>
                   </template>
                   <b-form-input></b-form-input>
@@ -108,25 +114,11 @@
                 <div class="table-responsive">
                   <table class="table table-bordered table-sm bg-white">
                     <thead>
-                      <tr>
-                        <th></th>
-                        <th>Sunday</th>
-                        <th>Monday</th>
-                        <th>Tuesday</th>
-                        <th>Wednesday</th>
-                        <th>Thursday</th>
-                        <th>Friday</th>
-                        <th>Saturday</th>
-                      </tr>
-                      <tr>
-                        <th></th>
-                        <th>Jun, 9</th>
-                        <th>Jun, 10</th>
-                        <th>Jun, 11</th>
-                        <th>Jun, 12</th>
-                        <th>Jun, 13</th>
-                        <th>Jun, 14</th>
-                        <th>Jun, 15</th>
+                      <tr v-for="thr in table_header_rows" :key="thr">
+                        <td></td>
+                        <th v-for="th in thr" :key="th.id">
+                          {{ th.name }}
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -246,6 +238,8 @@ export default {
   },
   data: () => {
     return {
+      // Testing
+
       // firebase
       users: [],
       scheduling: [],
@@ -279,6 +273,70 @@ export default {
           id: 7,
           children: [],
         },
+      ],
+
+      // Table
+      table_header_rows: [
+        [
+          {
+            id: 1,
+            name: 'Sunday',
+          },
+          {
+            id: 2,
+            name: 'Monday',
+          },
+          {
+            id: 3,
+            name: 'Tuesday',
+          },
+          {
+            id: 4,
+            name: 'Wednesday',
+          },
+          {
+            id: 5,
+            name: 'Thursday',
+          },
+          {
+            id: 6,
+            name: 'Friday',
+          },
+          {
+            id: 7,
+            name: 'Saturday',
+          },
+        ],
+        [
+          {
+            id: 1,
+            name: 'Jun, 9',
+          },
+          {
+            id: 2,
+            name: 'Jun, 10',
+          },
+          {
+            id: 3,
+            name: 'Jun, 11',
+          },
+          {
+            id: 4,
+            name: 'Jun, 12',
+          },
+          {
+            id: 5,
+            name: 'Jun, 13',
+          },
+          {
+            id: 6,
+            name: 'Jun, 14',
+          },
+          {
+            id: 7,
+            name: 'Jun, 15',
+          },
+        ],
       ],
 
       // page stuff
